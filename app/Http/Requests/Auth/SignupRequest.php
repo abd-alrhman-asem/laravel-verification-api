@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+
 
 class SignupRequest extends FormRequest
 {
@@ -30,4 +33,15 @@ class SignupRequest extends FormRequest
             'password' => 'required|string|min:8', // Password rules and confirmation
         ];
     }
+    protected function failedValidation(Validator $validator): void
+    {
+        $errorMessage = $validator->errors()->all();
+        $errorMessage = (string)array_pop($errorMessage);
+        throw new HttpResponseException(
+            response: unprocessableResponse(
+                (array)$errorMessage
+            )
+        );
+    }
+
 }
