@@ -46,7 +46,20 @@ return [
     |
     */
 
-    'expiration' => null,
+    'expiration' => 300,// this value in second
+
+    /*
+        |--------------------------------------------------------------------------
+        | Refresh Expiration Minutes
+        |--------------------------------------------------------------------------
+        |
+        | This value controls the number of minutes until a Refresh token will be
+        | considered expired. If this value is null, personal access tokens do
+        | not expire. This won't tweak the lifetime of first-party sessions.
+        |
+        */
+
+    'refresh_expiration' => 10,//this value in minutes
 
     /*
     |--------------------------------------------------------------------------
