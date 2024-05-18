@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginRefreshController;
 use App\Http\Controllers\Auth\SignupController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 Route::post('/signup', [SignupController::class, 'store']); // Using controller class reference
-
-
-
+Route::post('/verifyAccount ', [SignupController::class, 'checkVerificationCode']); // Using controller class reference
+//Route::post('/resendVerificationCode ', [SignupController::class, 'resendVerificationCode']); // Using controller class reference
+Route::post('/refresh', [LoginRefreshController::class, 'refreshToken']); // Using controller class reference
 //Route::group(['middleware' => ['api', 'sanctum']], function () {
 //});
+Route::post('/resendVerificationCode ', [SignupController::class, 'resendVerificationCode']); // Using controller class reference

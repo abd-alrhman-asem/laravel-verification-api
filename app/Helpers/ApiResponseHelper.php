@@ -95,15 +95,15 @@ if (!function_exists('error')) {
  * @return JsonResponse
  */
 if (!function_exists('loggedInSuccessfully')) {
-    function loggedInSuccessfully(string $token,  $user = null): JsonResponse
+    function loggedInSuccessfully(string $token , $message = null  , $expiresIn = null , $user = null): JsonResponse
     {
         return success(
-            null,
+            $user,
             [
-                'message' => 'user get in successfully ',
+                'message' =>$message ?? 'user get in successfully ',
                 'access_token' => $token,
                 'token_type' => 'bearer',
-                'expires_in' => 2592000, // 30 days in seconds (60 seconds/minute * 60 minutes/hour * 24 hours/day * 30 days)
+                'expires_in' => $expiresIn ??  300 ,
             ],
         );
     }
