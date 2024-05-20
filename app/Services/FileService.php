@@ -23,16 +23,5 @@ class FileService
         $file = $request->file($fileKey);
         $fileName = microtime() . '.' . $file->getClientOriginalExtension();
         return $file->move(storage_path($path), $fileName);
-
-
-
-
-//        $file_name = microtime() . '.' . $request->file($fileKey)->getClientOriginalExtension();
-//        $file = $request->file($fileKey)->storeAs($path , $file_name);
-//        $file->storeAs($path , $file_name);
-//        Storage::disk('local')-> putFileAs($path, $file, $filename);
-//        Storage::disk('local')-> put('example.txt', 'Contents');
-
-
     }
 }
