@@ -116,10 +116,13 @@ if (!function_exists('loggedInSuccessfully')) {
  * @return JsonResponse
  */
 if (!function_exists('generalFailureResponse')) {
-    function generalFailureResponse(mixed $errorMessage): JsonResponse
+    function generalFailureResponse(mixed $errorMessage
+        , $StatusCode = Response::HTTP_INTERNAL_SERVER_ERROR
+    ): JsonResponse
     {
         return error(
             "general error : " . $errorMessage,
+
         );
     }
 }
@@ -185,7 +188,9 @@ if (!function_exists('notFoundResponse')) {
  */
 
 if (!function_exists('unprocessableResponse')) {
-    function unprocessableResponse(array $message): JsonResponse
+    function unprocessableResponse(
+        array|string $message
+    ): JsonResponse
     {
         return error(
             $message ?: 'Unprocessable Entity.',

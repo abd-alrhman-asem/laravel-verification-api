@@ -3,29 +3,49 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\loginAndRefreshRequest\loginRequest;
+use App\Http\Requests\Auth\loginAndRefreshRequest\refreshTokenRequest;
 use App\Services\AuthService;
+use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 
 class LoginRefreshController extends Controller
 {
-    public function refreshToken(
-        Request     $request,
-        AuthService $authService
-    ): JsonResponse
+    /**
+     * @param AuthService $authService
+     */
+    public function __construct(public AuthService $authService)
     {
-        try {
-            $token = $authService->refreshUserToken($request, $TokenExpireTime);
-            return loggedInSuccessfully(
-                $token,
-                'the user refreshed successfully ',
-                $TokenExpireTime
-            );
-        } catch (\Throwable $e) {
-            return generalFailureResponse($e->getMessage()); // this for app in development
-            //return generalFailureResponse('general error please try again ! '); // this for app in production
-        }
+    }
+
+    /**
+     * @param refreshTokenRequest $request
+     * @return JsonResponse
+     */
+    public function refreshToken(refreshTokenRequest $request): JsonResponse
+    {
+        $token = $this->authService->refreshUserToken($request, $TokenExpireTime);
+        return loggedInSuccessfully(
+            $token,
+            'the user refreshed successfully ',
+            $TokenExpireTime
+        );
+    }
+
+    /**
+     * @param loginRequest $request
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function login(loginRequest $request): JsonResponse
+    {
+        $token = $this->authService->logInUser($request, $TokenExpireTime);
+        return loggedInSuccessfully(
+            $token,
+            'the user logged in successfully',
+            $TokenExpireTime
+        );
     }
 
 
