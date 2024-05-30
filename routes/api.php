@@ -18,11 +18,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::prefix('api')->group(function () {
-    $api_path = '/Auth';
+/* Auth Routes
+|  login , signup , refresh token ,logout
+|  send verification code , resend verification code
+*/
+Route::prefix('Auth')->group(function () {
 // Auth Routes
-    include __DIR__ . "{$api_path}";
+    include __DIR__ . "/Auth";
+});
+//fallback route handling
+Route::fallback(function (){
+    return notFoundResponse('invalid Url , ulr not found');
 });
 
 
