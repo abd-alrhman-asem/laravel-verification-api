@@ -9,6 +9,8 @@ use App\Http\Requests\Auth\signupAndVerificationRequests\SignupRequest;
 use App\Services\AuthService;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 
 class SignupController extends Controller
@@ -26,7 +28,7 @@ class SignupController extends Controller
             $this->authService->signup($request);
             return successOperationResponse(
                 'Account created successfully. Please check your email for verification.',
-                201);
+                ResponseAlias::HTTP_CREATED);
     }
 
     /**
@@ -43,9 +45,11 @@ class SignupController extends Controller
                 $expiresIn
             );
     }
+
     /**
      * @param resendVerificationRequest $request
      * @return JsonResponse
+     * @throws Exception
      */
     public function resendVerificationCode(resendVerificationRequest $request): JsonResponse
     {
